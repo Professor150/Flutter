@@ -8,6 +8,19 @@ class NewTransaction extends StatelessWidget {
 
   NewTransaction(this.addTx);
 
+  void submitData() {
+    final enterdTitle = titleController.text;
+    final enterdAmount = double.parse(amountController.text);
+
+    if (enterdTitle.isEmpty || enterdAmount <= 0) {
+      return;
+    }
+    addTx(
+      titleController.text,
+      double.parse(amountController.text),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,6 +37,7 @@ class NewTransaction extends StatelessWidget {
               border: OutlineInputBorder(),
               icon: Icon(Icons.input),
             ),
+            onSubmitted: (_) => submitData,
           ),
         ),
         SizedBox(
@@ -40,6 +54,7 @@ class NewTransaction extends StatelessWidget {
               icon: Icon(Icons.ac_unit_outlined),
             ),
             keyboardType: TextInputType.number,
+            onSubmitted: (_) => submitData,
           ),
         ),
         SizedBox(
@@ -49,12 +64,7 @@ class NewTransaction extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
           decoration: BoxDecoration(border: Border.all(color: Colors.yellow)),
           child: TextButton(
-            onPressed: () {
-              addTx(
-                titleController.text,
-                double.parse(amountController.text),
-              );
-            },
+            onPressed: submitData,
             child: Text('ADD TRANSACTION'),
           ),
         ),
