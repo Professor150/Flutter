@@ -31,11 +31,10 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  void startAddNewTransactions(BuildContext ctx) {
+  void startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        // return NewTransaction(_addNewTransaction);
         return GestureDetector(
           onTap: () {},
           child: NewTransaction(_addNewTransaction),
@@ -51,8 +50,9 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () => startAddNewTransactions(context),
-              icon: Icon(Icons.add))
+            icon: Icon(Icons.add),
+            onPressed: () => startAddNewTransaction(context),
+          ),
         ],
         title: Text(' T O D O A P P'),
         centerTitle: true,
@@ -71,36 +71,38 @@ class HomePageState extends State<HomePage> {
                 begin: Alignment.bottomCenter,
                 end: Alignment.centerRight,
                 colors: <Color>[Colors.blue, Colors.green.shade300])),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.yellow.shade100),
-                child: Center(
-                  child: Text(
-                    ' TO DO APP',
-                    style: TextStyle(
-                      fontSize: 30,
+        child: Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.yellow.shade100),
+                  child: Center(
+                    child: Text(
+                      ' TO DO APP',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TransactionList(_userTransaction),
-            ],
+                SizedBox(height: 10),
+                TransactionList(_userTransaction),
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => startAddNewTransactions(context),
         child: Icon(Icons.add),
+        onPressed: () => startAddNewTransaction(context),
       ),
     );
   }
