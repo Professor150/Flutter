@@ -1,10 +1,10 @@
-class Translation {
+class Transaction {
   final String id;
   final String name;
   final double amount;
   final DateTime date;
 
-  Translation({
+  Transaction({
     required this.id,
     required this.name,
     required this.amount,
