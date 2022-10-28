@@ -25,10 +25,10 @@ class Chart extends StatelessWidget {
       }
 
       return {
-        'Day': DateFormat.E().format(weekday).substring(0, 1),
+        'Day': DateFormat.E().format(weekday).substring(0, 3),
         'amount': totalSum,
       };
-    });
+    }).reversed.toList();
   }
 
   double get totalSpending {

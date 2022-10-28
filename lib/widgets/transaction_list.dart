@@ -6,13 +6,14 @@ import 'models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transaction;
+  final Function deletetx;
 
-  TransactionList(this.transaction);
+  TransactionList(this.transaction, this.deletetx);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 600,
+      height: 800,
       child: transaction.isEmpty
           ? Column(
               children: [
@@ -34,42 +35,73 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (ctx, index) {
                 return Card(
-                  elevation: 6,
-                  child: Container(
-                    color: Colors.greenAccent,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              border: Border.all(color: Colors.blue)),
-                          child: Center(
-                            child: Text(
-                              '\$${transaction[index].amount.toStringAsFixed(2)}',
-                              style: TextStyle(fontSize: 30),
-                            ),
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 7),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text(
+                            '\$${transaction[index].amount}',
+                            style: myText25(),
                           ),
                         ),
-                        Container(
-                          color: Colors.greenAccent,
-                          margin: EdgeInsets.symmetric(horizontal: 40),
-                          child: Column(
-                            children: [
-                              Text(transaction[index].name),
-                              SizedBox(height: 10),
-                              Text(
-                                DateFormat.yMMMEd()
-                                    .format(transaction[index].date),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
+                    ),
+                    title: Text(
+                      transaction[index].name,
+                      style: myText35(),
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMEd().format(transaction[index].date),
+                      style: myText20(),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Colors.red,
+                      onPressed: () => deletetx(transaction[index].id),
                     ),
                   ),
                 );
+                // return Card(
+                //   elevation: 6,
+                //   child: Container(
+                //     color: Colors.greenAccent,
+                //     child: Row(
+                //       children: [
+                //         Container(
+                //           margin: EdgeInsets.all(5),
+                //           height: 60,
+                //           decoration: BoxDecoration(
+                //               color: Theme.of(context).primaryColor,
+                //               border: Border.all(color: Colors.blue)),
+                //           child: Center(
+                //             child: Text(
+                //               '\$${transaction[index].amount.toStringAsFixed(2)}',
+                //               style: TextStyle(fontSize: 30),
+                //             ),
+                //           ),
+                //         ),
+                //         Container(
+                //           color: Colors.greenAccent,
+                //           margin: EdgeInsets.symmetric(horizontal: 40),
+                //           child: Column(
+                //             children: [
+                //               Text(transaction[index].name),
+                //               SizedBox(height: 10),
+                //               Text(
+                //                 DateFormat.yMMMEd()
+                //                     .format(transaction[index].date),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // );
               },
               itemCount: transaction.length,
             ),

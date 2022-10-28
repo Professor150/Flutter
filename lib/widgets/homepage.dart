@@ -15,7 +15,7 @@ class HomePageState extends State<HomePage> {
   final amountController = TextEditingController();
 
   final List<Transaction> _userTransaction = [
-    // Transaction(id: '1', name: 'Pradeep  ', amount: 100, date: DateTime.now()),
+    Transaction(id: '1', name: 'Pradeep  ', amount: 100, date: DateTime.now()),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -28,12 +28,13 @@ class HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime choosenDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       name: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: choosenDate,
     );
     setState(() {
       _userTransaction.add(newTx);
@@ -51,6 +52,14 @@ class HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+  void _deleteNewTransaction(String id) {
+    setState(() {
+      _userTransaction.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
   }
 
   @override
@@ -86,7 +95,7 @@ class HomePageState extends State<HomePage> {
             children: [
               Chart(_recentTransactions),
               SizedBox(height: 10),
-              TransactionList(_userTransaction),
+              TransactionList(_userTransaction, _deleteNewTransaction),
             ],
           ),
         ),
